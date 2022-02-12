@@ -26,6 +26,9 @@ class Player(GameSprite):
     def fire(self):
         bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 20, -15)
         bullets.add(bullet)
+player = Player('kolobok.png', 300, 400, 170, 100, 12)
+rocket1 = Player('ракетка.png', 25, 250, 170, 100, 12)
+rocket2 = Player('ракетка.png', 500, 250, 170, 100, 12)
 clock = time.Clock()
 FPS = 60
 back = (50, 140, 42)
@@ -38,5 +41,12 @@ while game:
         if e.type==QUIT:
             game = False
     window.fill((50, 140, 42))
+    player.reset()
+    player.update()
+    rocket1.reset()
+    rocket1.update()
+    rocket2.reset()
+    rocket2.update()
     display.update()
+    
     clock.tick(FPS)
