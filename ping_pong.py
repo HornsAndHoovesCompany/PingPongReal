@@ -12,6 +12,20 @@ class GameSprite(sprite.Sprite):
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
+class Player(GameSprite):
+    def update(self):
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_LEFT] and player.rect.x > 5:
+            player.rect.x-=self.speed
+        if keys_pressed[K_RIGHT] and player.rect.x < 595:
+            player.rect.x+=self.speed
+        '''if keys_pressed[K_UP] and player.rect.y > 5:
+            player.rect.y-=self.speed
+        if keys_pressed[K_DOWN] and player.rect.y < 395:
+            player.rect.y+=self.speed'''
+    def fire(self):
+        bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 20, -15)
+        bullets.add(bullet)
 clock = time.Clock()
 FPS = 60
 back = (50, 140, 42)
