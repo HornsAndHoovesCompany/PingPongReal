@@ -1,5 +1,11 @@
 from pygame import *
 from random import randint
+font.init()
+font1 = font.SysFont('Arial', 35)
+lose1 = font1.render(
+    'Left Player Lose', True, (255, 1, 1))
+lose2 = font1.render(
+    'Right Player Lose', True, (255, 1, 1))
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):
         super().__init__()
@@ -60,8 +66,15 @@ while game:
         
         if sprite.collide_rect(rocket1, ball) or sprite.collide_rect(rocket2, ball):
             speed_x *= -1
+        
+    
+        if ball.rect.x < 0:
+            finish = True
+            window.blit(lose1, (250, 250))
+    
+        if ball.rect.x > 600:
+            finish = True
+            window.blit(lose2, (250, 250))
+
         display.update()
-    
-    
-    
     clock.tick(FPS)
