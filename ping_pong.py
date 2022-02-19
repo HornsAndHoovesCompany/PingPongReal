@@ -56,8 +56,12 @@ while game:
         ball.rect.x+=speed_x
 
         if ball.rect.y > win_height-130 or ball.rect.y==0:
-            speed_y*=-1
-            
-        display.update()
+            speed_y *= -1
         
+        if sprite.collide_rect(rocket1, ball) or sprite.collide_rect(rocket2, ball):
+            speed_x *= -1
+        display.update()
+    
+    
+    
     clock.tick(FPS)
