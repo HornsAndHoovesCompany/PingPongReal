@@ -15,24 +15,28 @@ class GameSprite(sprite.Sprite):
 class Player(GameSprite):
     def update(self):
         keys_pressed = key.get_pressed()
-        if keys_pressed[K_LEFT] and player.rect.x > 5:
-            player.rect.x-=self.speed
-        if keys_pressed[K_RIGHT] and player.rect.x < 595:
-            player.rect.x+=self.speed
-        '''if keys_pressed[K_UP] and player.rect.y > 5:
-            player.rect.y-=self.speed
-        if keys_pressed[K_DOWN] and player.rect.y < 395:
-            player.rect.y+=self.speed'''
-    def fire(self):
-        bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 20, -15)
-        bullets.add(bullet)
-player = Player('kolobok.png', 300, 400, 170, 100, 12)
-rocket1 = Player('ракетка.png', 25, 250, 170, 100, 12)
-rocket2 = Player('ракетка.png', 500, 250, 170, 100, 12)
+        if keys_pressed[K_UP] and self.rect.y > 5:
+            self.rect.y-=self.speed
+        if keys_pressed[K_DOWN] and self.rect.y < 370:
+            self.rect.y+=self.speed
+    def update_new(self):
+        keys_pressed = key.get_pressed()
+        if keys_pressed[K_w] and self.rect.y > 5:
+            self.rect.y-=self.speed
+        if keys_pressed[K_s] and self.rect.y < 370:
+            self.rect.y+=self.speed
+speed_x = 3
+speed_y = 5
+
+ball = Player('kolobok.png', 300, 250, 130, 80, 12)
+rocket1 = Player('ракетка.png', 15, 190, 140, 140, 12)
+rocket2 = Player('ракетка.png', 500, 190, 140, 140, 12)
 clock = time.Clock()
 FPS = 60
 back = (50, 140, 42)
-window = display.set_mode((700, 500))
+win_width = 700
+win_height = 500
+window = display.set_mode((win_width, win_height))
 display.set_caption('Ping-pong')
 game = True
 finish = False
@@ -40,13 +44,20 @@ while game:
     for e in event.get():
         if e.type==QUIT:
             game = False
-    window.fill((50, 140, 42))
-    player.reset()
-    player.update()
-    rocket1.reset()
-    rocket1.update()
-    rocket2.reset()
-    rocket2.update()
-    display.update()
-    
+    if finish!=True:
+        window.fill((50, 140, 42))
+        ball.reset()
+        rocket1.reset()
+        rocket1.update_new()
+        rocket2.reset()
+        rocket2.update()
+
+        ball.rect.y+=speed_y
+        ball.rect.x+=speed_x
+
+        if ball.rect.y > win_height-130 or ball.rect.y==0:
+            speed_y*=-1
+            
+        display.update()
+        
     clock.tick(FPS)
